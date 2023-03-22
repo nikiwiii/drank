@@ -1,0 +1,98 @@
+#:import Menu,MenuItem,RootScreen,DrinkScreen,LedScreen custom_widgets
+
+<MenuItem>
+    text: root.text_polish
+    on_press:
+        app.root.ids.nav_drawer.set_state("close")
+        app.root.ids.screen_manager.current = root.next_screen_name
+    secondary_text: root.text_english
+    IconLeftWidget:
+        icon: root.icon_name
+
+
+<Menu>
+    ScrollView:
+        BoxLayout:
+            orientation: "vertical"
+            Image:
+                source: "data/logo.png"
+                size_hint_y: .35
+            MDList:
+                MenuItem:
+                    text_polish: "Przygotuj mi drinka"
+                    text_english: "Make me a drink"
+                    icon_name: "glass-cocktail"
+                    next_screen_name: "scr 1"
+
+                MenuItem:
+                    text_polish: "Wybierz kolor paska LED"
+                    text_english: "Select LED strip color"
+                    icon_name: "led-strip"
+                    next_screen_name: "scr 2"
+
+                MenuItem:
+                    text_polish: "Wybierz napoje"
+                    text_english: "Select drink"
+                    icon_name: "cup-water"
+                    next_screen_name: "scr 2"
+					
+                MenuItem:
+                    text_polish: "Zarządzaj uprawnieniami"
+                    text_english: "Manage permissions"
+                    icon_name: "account-card-outline"
+                    next_screen_name: "scr 2"
+
+                MenuItem:
+                    text_polish: "O projekcie"
+                    text_english: "About"
+                    icon_name: "information-outline"
+                    next_screen_name: "scr 2"
+
+                MenuItem:
+                    text_polish: "Pomoc"
+                    text_english: "Help"
+                    icon_name: "help"
+                    next_screen_name: "scr 2"
+            MDLabel
+
+
+<RootScreen>:
+    MDTopAppBar:
+        id: toolbar
+        pos_hint: {"top": 1}
+        elevation: 10
+        title: "EasyBarman"
+        left_action_items: [["menu", lambda x: nav_drawer.set_state("open")]]
+
+    MDNavigationLayout:
+        x: toolbar.height
+
+        MDScreenManager:
+            id: screen_manager
+            DrinkScreen
+            LedScreen
+
+        MDNavigationDrawer:
+            id: nav_drawer
+            Menu:
+                screen_manager: screen_manager
+                nav_drawer: nav_drawer
+
+
+<DrinkScreen>
+    name: "scr 1"
+    MDLabel:
+        text: "Screen 1"
+        halign: "center"
+
+
+<LedScreen>
+    name: "scr 2"
+    MDLabel:
+        text: "Screen 2"
+        halign: "center"
+    MDSlider
+        hint: True
+
+
+RootScreen
